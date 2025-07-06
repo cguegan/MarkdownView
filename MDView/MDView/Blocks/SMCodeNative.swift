@@ -69,6 +69,10 @@ struct SMCodeNative: View {
     }
 }
 
+
+// MARK: - Subviews
+// ————————————————
+
 #Preview("Code Blocks") {
     ScrollView {
         VStack(alignment: .leading, spacing: 30) {

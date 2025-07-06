@@ -40,6 +40,9 @@ struct SMParagraph: View {
 }
 
 
+// MARK: - Subviews
+// ————————————————
+
 #Preview("Paragraph Styles") {
     ScrollView {
         VStack(alignment: .leading, spacing: 20) {

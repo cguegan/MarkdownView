@@ -81,6 +81,10 @@ struct SMOrderedList: View {
     
 }
 
+
+// MARK: - Subviews
+// ————————————————
+
 #Preview("Ordered Lists") {
     ScrollView {
         VStack(alignment: .leading, spacing: 30) {

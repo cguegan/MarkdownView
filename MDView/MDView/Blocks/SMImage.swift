@@ -43,6 +43,10 @@ struct SMImage: View {
     }
 }
 
+
+// MARK: - Subviews
+// ————————————————
+
 #Preview("Images") {
     ScrollView {
         VStack(alignment: .leading, spacing: 30) {
@@ -83,6 +87,6 @@ struct SMImage: View {
         }
         .padding()
     }
-    .frame(width: 700, height: 800)
+    .frame(maxWidth: .infinity)
 }
 

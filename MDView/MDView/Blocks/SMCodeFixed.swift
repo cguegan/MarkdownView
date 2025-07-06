@@ -77,3 +77,8 @@ struct SMCodeFixed: View {
         }
     }
 }
+
+
+// MARK: - Subviews
+// ————————————————
+

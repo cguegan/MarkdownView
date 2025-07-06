@@ -221,6 +221,9 @@ struct HighlightedCodeView: UIViewRepresentable {
 #endif
 
 
+// MARK: - Subviews
+// ————————————————
+
 //#Preview {
 //    SMParagraph()
 //}

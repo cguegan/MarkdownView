@@ -47,3 +47,6 @@ struct SMCodeSimple: View {
         .padding(.vertical, 4)
     }
 }
+
+// MARK: - Subviews
+// ————————————————

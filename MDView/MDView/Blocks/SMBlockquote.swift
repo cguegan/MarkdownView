@@ -71,6 +71,10 @@ struct SMBlockquote: View {
     
 }
 
+
+// MARK: - Subviews
+// ————————————————
+
 #Preview("Blockquotes") {
     ScrollView {
         VStack(alignment: .leading, spacing: 20) {

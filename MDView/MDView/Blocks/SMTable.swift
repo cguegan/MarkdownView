@@ -69,6 +69,9 @@ struct SMTable: View {
 }
 
 
+// MARK: - Subviews
+// ————————————————
+
 #Preview("Tables") {
     ScrollView {
         VStack(alignment: .leading, spacing: 30) {

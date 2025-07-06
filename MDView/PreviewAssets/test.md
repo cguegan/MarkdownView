@@ -47,12 +47,33 @@ By creating a culture where everyone takes responsibility for a safe working env
 
 ___
 
-## Table
+## Tables
 
-| Table Header | Col Two     |
-| ------------ | ----------- |
-| Col_1 Row_A  | Col_2 Row_A |
-| Col_1 Row_B  | Col_2 Row_B |
+### Basic Table
+
+| Table Header | Col Two     | Col Three   |
+| ------------ | ----------- | ----------- |
+| Col_1 Row_A  | Col_2 Row_A | Col_3 Row_A |
+| Col_1 Row_B  | Col_2 Row_B | Col_3 Row_B |
+| Col_1 Row_C  | Col_2 Row_C | Col_3 Row_C |
+
+### Table with Inline Formatting
+
+| Feature | Description | Status |
+|---------|-------------|--------|
+| **Bold text** | Supports bold formatting | ✅ Complete |
+| *Italic text* | Supports italic formatting | ✅ Complete |
+| `Code` | Inline code formatting | ✅ Complete |
+| [Links](https://example.com) | Clickable links | ⏳ Pending |
+
+### Complex Table
+
+| Product | Price | Stock | Category |
+|---------|-------|-------|----------|
+| MacBook Pro 14" | $1,999 | 15 | Computers |
+| iPhone 15 Pro | $999 | 42 | Phones |
+| AirPods Pro | $249 | 128 | Audio |
+| Apple Watch Ultra | $799 | 23 | Wearables |
 
 - - -
 

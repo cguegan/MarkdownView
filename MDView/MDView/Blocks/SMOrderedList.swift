@@ -103,7 +103,7 @@ struct SMOrderedList: View {
                         SMOrderedList(nestedOrderedList, indentLevel: indentLevel + 1)
                     } else if let codeBlock = block as? CodeBlock {
                         // Code blocks within list items
-                        SMCodeSyntax(codeBlock)
+                        SMCode(codeBlock)
                     } else {
                         // Fallback for any other block types
                         Text(block.format())

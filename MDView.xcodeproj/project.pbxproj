@@ -11,14 +11,6 @@
 		EF2597A62E1A4D7800FA4F18 /* Markdown in Frameworks */ = {isa = PBXBuildFile; productRef = EF2597A52E1A4D7800FA4F18 /* Markdown */; };
 		EF2597A82E1A4FF800FA4F18 /* MarkdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2597A72E1A4FF800FA4F18 /* MarkdownView.swift */; };
 		EF2597AD2E1A7D3800FA4F18 /* Highlightr in Frameworks */ = {isa = PBXBuildFile; productRef = EF2597AC2E1A7D3800FA4F18 /* Highlightr */; };
-		EF2597B02E1A7FE900FA4F18 /* SMCodeSimple.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2597AF2E1A7FE900FA4F18 /* SMCodeSimple.swift */; };
-		EF2597B42E1A831300FA4F18 /* SMCodeNative.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2597B32E1A831300FA4F18 /* SMCodeNative.swift */; };
-		EF2597B52E1A831300FA4F18 /* SMCodeFixed.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2597B22E1A831300FA4F18 /* SMCodeFixed.swift */; };
-		EF2597B92E1A832400FA4F18 /* HighlightrDebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2597B62E1A832400FA4F18 /* HighlightrDebugView.swift */; };
-		EF2597BA2E1A832400FA4F18 /* SimpleHighlightTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2597B72E1A832400FA4F18 /* SimpleHighlightTest.swift */; };
-		EF2597BB2E1A832400FA4F18 /* TestHighlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2597B82E1A832400FA4F18 /* TestHighlightView.swift */; };
-		EF2597BD2E1A89C800FA4F18 /* SMCodeHighlighted.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2597BC2E1A89C800FA4F18 /* SMCodeHighlighted.swift */; };
-		EF2597BF2E1A8AE600FA4F18 /* SMCodeSyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2597BE2E1A8AE600FA4F18 /* SMCodeSyntax.swift */; };
 		EFB0B1232E193A8000C2C218 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EFB0B11A2E193A8000C2C218 /* Assets.xcassets */; };
 		EFB0B1242E193A8000C2C218 /* test.md in Resources */ = {isa = PBXBuildFile; fileRef = EFB0B1212E193A8000C2C218 /* test.md */; };
 		EFB0B1262E193A8000C2C218 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB0B11B2E193A8000C2C218 /* ContentView.swift */; };
@@ -40,14 +32,6 @@
 /* Begin PBXFileReference section */
 		EF2597A22E1A4BD700FA4F18 /* 03_Mini_ISM_Manual.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = 03_Mini_ISM_Manual.md; sourceTree = "<group>"; };
 		EF2597A72E1A4FF800FA4F18 /* MarkdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownView.swift; sourceTree = "<group>"; };
-		EF2597AF2E1A7FE900FA4F18 /* SMCodeSimple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMCodeSimple.swift; sourceTree = "<group>"; };
-		EF2597B22E1A831300FA4F18 /* SMCodeFixed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMCodeFixed.swift; sourceTree = "<group>"; };
-		EF2597B32E1A831300FA4F18 /* SMCodeNative.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMCodeNative.swift; sourceTree = "<group>"; };
-		EF2597B62E1A832400FA4F18 /* HighlightrDebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightrDebugView.swift; sourceTree = "<group>"; };
-		EF2597B72E1A832400FA4F18 /* SimpleHighlightTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleHighlightTest.swift; sourceTree = "<group>"; };
-		EF2597B82E1A832400FA4F18 /* TestHighlightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHighlightView.swift; sourceTree = "<group>"; };
-		EF2597BC2E1A89C800FA4F18 /* SMCodeHighlighted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMCodeHighlighted.swift; sourceTree = "<group>"; };
-		EF2597BE2E1A8AE600FA4F18 /* SMCodeSyntax.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMCodeSyntax.swift; sourceTree = "<group>"; };
 		EF66AA0C2E18F71400679843 /* MDView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MDView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFB0B11A2E193A8000C2C218 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EFB0B11B2E193A8000C2C218 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -140,9 +124,6 @@
 			isa = PBXGroup;
 			children = (
 				EFB0B1202E193A8000C2C218 /* SwiftMardownView.swift */,
-				EF2597B62E1A832400FA4F18 /* HighlightrDebugView.swift */,
-				EF2597B72E1A832400FA4F18 /* SimpleHighlightTest.swift */,
-				EF2597B82E1A832400FA4F18 /* TestHighlightView.swift */,
 				EFB0B12D2E193B0200C2C218 /* Blocks */,
 			);
 			path = MDView;
@@ -151,14 +132,9 @@
 		EFB0B12D2E193B0200C2C218 /* Blocks */ = {
 			isa = PBXGroup;
 			children = (
-				EF2597BC2E1A89C800FA4F18 /* SMCodeHighlighted.swift */,
-				EF2597BE2E1A8AE600FA4F18 /* SMCodeSyntax.swift */,
 				EFB0B12E2E193B3400C2C218 /* SMParagraph.swift */,
 				EFB0B1382E19786A00C2C218 /* SMCode.swift */,
-				EF2597AF2E1A7FE900FA4F18 /* SMCodeSimple.swift */,
 				EFB0B1362E19591100C2C218 /* SMTable.swift */,
-				EF2597B22E1A831300FA4F18 /* SMCodeFixed.swift */,
-				EF2597B32E1A831300FA4F18 /* SMCodeNative.swift */,
 				EFB0B1302E193BD300C2C218 /* SMHeading.swift */,
 				EFB0B1322E193C4D00C2C218 /* SMUnorderedList.swift */,
 				EFB0B13E2E19893200C2C218 /* SMOrderedList.swift */,
@@ -252,14 +228,11 @@
 			files = (
 				EFB0B1262E193A8000C2C218 /* ContentView.swift in Sources */,
 				EFB0B13F2E19893200C2C218 /* SMOrderedList.swift in Sources */,
-				EF2597BD2E1A89C800FA4F18 /* SMCodeHighlighted.swift in Sources */,
 				EFB0B1372E19591100C2C218 /* SMTable.swift in Sources */,
 				EFB0B1332E193C4D00C2C218 /* SMUnorderedList.swift in Sources */,
-				EF2597BF2E1A8AE600FA4F18 /* SMCodeSyntax.swift in Sources */,
 				EFB0B12F2E193B3400C2C218 /* SMParagraph.swift in Sources */,
+				EF2597C12E1A8C9100FA4F18 /* SMCodeHighlightr.swift in Sources */,
 				EF2597A82E1A4FF800FA4F18 /* MarkdownView.swift in Sources */,
-				EF2597B42E1A831300FA4F18 /* SMCodeNative.swift in Sources */,
-				EF2597B52E1A831300FA4F18 /* SMCodeFixed.swift in Sources */,
 				EFB0B1272E193A8000C2C218 /* EditorView.swift in Sources */,
 				EFB0B1312E193BD300C2C218 /* SMHeading.swift in Sources */,
 				EFB0B1282E193A8000C2C218 /* DebugStructView.swift in Sources */,
@@ -267,11 +240,7 @@
 				EFB0B1352E194D0000C2C218 /* SMBlockquote.swift in Sources */,
 				EFB0B12A2E193A8000C2C218 /* MDViewApp.swift in Sources */,
 				EFB0B1392E19786A00C2C218 /* SMCode.swift in Sources */,
-				EF2597B92E1A832400FA4F18 /* HighlightrDebugView.swift in Sources */,
-				EF2597BA2E1A832400FA4F18 /* SimpleHighlightTest.swift in Sources */,
-				EF2597BB2E1A832400FA4F18 /* TestHighlightView.swift in Sources */,
 				EFB0B12B2E193A8000C2C218 /* SwiftMardownView.swift in Sources */,
-				EF2597B02E1A7FE900FA4F18 /* SMCodeSimple.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

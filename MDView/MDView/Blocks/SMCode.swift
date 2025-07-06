@@ -2,7 +2,7 @@
 //  SMCode.swift
 //  MDView
 //
-//  Created by Christophe Guégan on 05/07/2025.
+//  Code highlighting using Highlightr with proper setup
 //
 
 import SwiftUI
@@ -10,54 +10,51 @@ import Markdown
 import Highlightr
 
 struct SMCode: View {
-    
     let code: String
     let language: String?
     @State private var highlightedCode: NSAttributedString?
     @Environment(\.colorScheme) var colorScheme
     
-    ///  Initialisation
     init(_ content: CodeBlock) {
-        self.code = content.code
-            .trimmingCharacters(in: .whitespacesAndNewlines)
-        self.language = content.language
+        self.code = content.code.trimmingCharacters(in: .whitespacesAndNewlines)
+        self.language = content.language?.lowercased()
     }
     
-    /// Main Body
     var body: some View {
-        Group {
-            #if os(macOS)
-            // For macOS, try using Text with AttributedString first
-            if let attributedString = highlightedCode,
-               let swiftUIAttributedString = try? AttributedString(attributedString, including: \.appKit) {
-                Text(swiftUIAttributedString)
-                    .font(.system(size: 12, weight: .regular, design: .monospaced))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            } else if let attributedString = highlightedCode {
-                // Fallback to NSViewRepresentable if AttributedString conversion fails
-                HighlightedCodeView(attributedString: attributedString)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            } else {
-                // Fallback to plain text
-                Text(code)
-                    .font(.system(size: 12, weight: .regular, design: .monospaced))
-                    .frame(maxWidth: .infinity, alignment: .leading)
+        VStack(alignment: .leading, spacing: 4) {
+            // Language label
+            if let language = language {
+                HStack {
+                    Text(language.uppercased())
+                        .font(.caption)
+                        .fontWeight(.medium)
+                        .foregroundColor(.secondary)
+                    Spacer()
+                }
+                .padding(.horizontal)
+                .padding(.top, 8)
             }
-            #else
-            if let attributedString = highlightedCode {
-                // Use highlighted code
-                HighlightedCodeView(attributedString: attributedString)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            } else {
-                // Fallback to plain text
-                Text(code)
-                    .font(.system(size: 12, weight: .regular, design: .monospaced))
-                    .frame(maxWidth: .infinity, alignment: .leading)
+            
+            // Code content
+            Group {
+                if let highlighted = highlightedCode {
+                    // Use the highlighted version
+                    CodeTextView(attributedString: highlighted)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                } else {
+                    // Fallback to plain text
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        Text(code)
+                            .font(.system(size: 12, weight: .regular, design: .monospaced))
+                            .foregroundColor(.primary)
+                            .padding()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .textSelection(.enabled)
+                    }
+                }
             }
-            #endif
         }
-        .padding()
-        .background(backgroundColorForPlatform)
+        .background(colorScheme == .dark ? Color.black.opacity(0.3) : Color.gray.opacity(0.1))
         .overlay(
             RoundedRectangle(cornerRadius: 8)
                 .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
@@ -66,141 +63,123 @@ struct SMCode: View {
         .padding(.horizontal)
         .padding(.vertical, 4)
         .onAppear {
-            highlightCode()
+            setupHighlighting()
+        }
+        .onChange(of: colorScheme) { _ in
+            setupHighlighting()
         }
     }
     
-    private func highlightCode() {
-        guard let highlighter = Highlightr() else {
-            print("❌ Failed to create Highlightr instance")
-            return
-        }
-        print("✅ Created Highlightr")
-        
-        // Get available themes
-        let themes = highlighter.availableThemes()
-        print("📋 Available themes: \(themes.count) - First few: \(themes.prefix(5).joined(separator: ", "))")
-        
-        // Try to use a simple theme that's likely to exist
-        var themeSet = false
-        let tryThemes = ["default", "github", "xcode", themes.first].compactMap { $0 }
-        
-        for theme in tryThemes {
-            if highlighter.setTheme(to: theme) {
-                print("✅ Successfully set theme: \(theme)")
-                themeSet = true
-                break
-            } else {
-                print("❌ Failed to set theme: \(theme)")
+    private func setupHighlighting() {
+        DispatchQueue.global(qos: .userInitiated).async {
+            guard let highlighter = Highlightr() else {
+                print("Failed to create Highlightr")
+                return
             }
-        }
-        
-        if !themeSet {
-            print("⚠️ Could not set any theme, using default")
-        }
-        
-        // Try highlighting
-        let testLanguage = language?.lowercased() ?? "swift"
-        print("🔍 Attempting to highlight as: \(testLanguage)")
-        
-        if let highlighted = highlighter.highlight(code, as: testLanguage) {
-            print("✅ Highlighted successfully!")
-            print("📏 Length: \(highlighted.length)")
             
-            // Check if there are actual color attributes
-            var colorCount = 0
-            highlighted.enumerateAttributes(in: NSRange(location: 0, length: highlighted.length), options: []) { attributes, range, _ in
-                if attributes[.foregroundColor] != nil {
-                    colorCount += 1
+            // Debug: List available themes
+            let themes = highlighter.availableThemes()
+            print("Available themes: \(themes.prefix(10).joined(separator: ", "))")
+            
+            // Try to set an appropriate theme
+            let themeName: String
+            if colorScheme == .dark {
+                // Try dark themes in order of preference
+                let darkThemes = ["vs2015", "monokai", "atom-one-dark", "tomorrow-night", "solarized-dark"]
+                themeName = darkThemes.first(where: { themes.contains($0) }) ?? themes.first ?? "default"
+            } else {
+                // Try light themes in order of preference
+                let lightThemes = ["github", "xcode", "vs", "atom-one-light", "solarized-light"]
+                themeName = lightThemes.first(where: { themes.contains($0) }) ?? themes.first ?? "default"
+            }
+            
+            let themeSet = highlighter.setTheme(to: themeName)
+            print("Theme '\(themeName)' set: \(themeSet)")
+            
+            // Try to highlight with the specified language
+            let highlighted: NSAttributedString?
+            if let lang = language {
+                highlighted = highlighter.highlight(code, as: lang, fastRender: true)
+                    ?? highlighter.highlight(code, as: lang) // Try without fast render
+                    ?? highlighter.highlight(code) // Try auto-detection
+            } else {
+                highlighted = highlighter.highlight(code) // Auto-detect
+            }
+            
+            if let highlighted = highlighted {
+                print("Successfully highlighted code")
+                DispatchQueue.main.async {
+                    self.highlightedCode = highlighted
                 }
-            }
-            print("🎨 Color attributes found: \(colorCount)")
-            
-            highlightedCode = highlighted
-        } else {
-            print("❌ Failed to highlight with language: \(testLanguage)")
-            
-            // Try without language
-            if let highlighted = highlighter.highlight(code) {
-                print("✅ Highlighted without language")
-                highlightedCode = highlighted
             } else {
-                print("❌ Failed to highlight without language")
+                print("Failed to highlight code")
             }
         }
-    }
-    
-    private var backgroundColorForPlatform: Color {
-        #if os(macOS)
-        return Color(NSColor.windowBackgroundColor).opacity(0.5)
-        #else
-        return Color(.systemGray6)
-        #endif
     }
 }
 
-// Helper view to display NSAttributedString
-#if os(macOS)
-struct HighlightedCodeView: NSViewRepresentable {
+// Custom view to display NSAttributedString
+struct CodeTextView: View {
     let attributedString: NSAttributedString
     
-    func makeNSView(context: Context) -> NSScrollView {
-        let scrollView = NSScrollView()
-        scrollView.hasVerticalScroller = false
-        scrollView.hasHorizontalScroller = false
-        scrollView.drawsBackground = false
-        scrollView.borderType = .noBorder
-        
+    var body: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            AttributedText(attributedString: attributedString)
+                .padding()
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+    }
+}
+
+// Bridge to display NSAttributedString in SwiftUI
+struct AttributedText: View {
+    let attributedString: NSAttributedString
+    
+    var body: some View {
+        if #available(iOS 15.0, macOS 12.0, *) {
+            // Try to convert to SwiftUI AttributedString
+            if let swiftUIAttrString = try? AttributedString(attributedString, including: \.uiKit) {
+                Text(swiftUIAttrString)
+                    .font(.system(size: 12, weight: .regular, design: .monospaced))
+                    .textSelection(.enabled)
+            } else {
+                // Fallback to platform-specific view
+                PlatformAttributedText(attributedString: attributedString)
+            }
+        } else {
+            PlatformAttributedText(attributedString: attributedString)
+        }
+    }
+}
+
+#if os(macOS)
+struct PlatformAttributedText: NSViewRepresentable {
+    let attributedString: NSAttributedString
+    
+    func makeNSView(context: Context) -> NSTextView {
         let textView = NSTextView()
         textView.isEditable = false
         textView.isSelectable = true
         textView.backgroundColor = .clear
-        textView.textContainerInset = NSSize(width: 0, height: 0)
-        textView.textContainer?.lineFragmentPadding = 0
+        textView.textContainerInset = .zero
         textView.isVerticallyResizable = true
-        textView.isHorizontallyResizable = false
-        textView.textContainer?.widthTracksTextView = true
-        textView.textContainer?.containerSize = NSSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
-        textView.autoresizingMask = [.width]
-        
-        // Set a default font if none is provided
-        textView.font = NSFont.monospacedSystemFont(ofSize: 12, weight: .regular)
-        
-        scrollView.documentView = textView
-        return scrollView
+        textView.isHorizontallyResizable = true
+        textView.textContainer?.widthTracksTextView = false
+        textView.textContainer?.containerSize = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
+        return textView
     }
     
-    func updateNSView(_ scrollView: NSScrollView, context: Context) {
-        guard let textView = scrollView.documentView as? NSTextView else { return }
+    func updateNSView(_ nsView: NSTextView, context: Context) {
+        nsView.textStorage?.setAttributedString(attributedString)
         
-        // Store the attributed string
-        textView.textStorage?.setAttributedString(attributedString)
-        
-        // Force layout update
-        textView.sizeToFit()
-        
-        // Calculate the required height
-        if let textContainer = textView.textContainer,
-           let layoutManager = textView.layoutManager {
-            layoutManager.ensureLayout(for: textContainer)
-            let usedRect = layoutManager.usedRect(for: textContainer)
-            let height = usedRect.height + textView.textContainerInset.height * 2
-            
-            // Update the frame
-            textView.setFrameSize(NSSize(width: textView.frame.width, height: height))
+        // Set a default font if needed
+        if nsView.font == nil {
+            nsView.font = NSFont.monospacedSystemFont(ofSize: 12, weight: .regular)
         }
     }
-    
-    func makeCoordinator() -> Coordinator {
-        Coordinator()
-    }
-    
-    class Coordinator: NSObject {
-        // Can be used for delegate methods if needed
-    }
 }
-#elseif os(iOS)
-struct HighlightedCodeView: UIViewRepresentable {
+#else
+struct PlatformAttributedText: UIViewRepresentable {
     let attributedString: NSAttributedString
     
     func makeUIView(context: Context) -> UITextView {
@@ -209,8 +188,8 @@ struct HighlightedCodeView: UIViewRepresentable {
         textView.isSelectable = true
         textView.backgroundColor = .clear
         textView.textContainerInset = .zero
-        textView.textContainer.lineFragmentPadding = 0
         textView.isScrollEnabled = false
+        textView.font = UIFont.monospacedSystemFont(ofSize: 12, weight: .regular)
         return textView
     }
     
@@ -220,11 +199,74 @@ struct HighlightedCodeView: UIViewRepresentable {
 }
 #endif
 
-
-// MARK: - Subviews
-// ————————————————
-
-//#Preview {
-//    SMParagraph()
-//}
-
+#Preview("Highlightr Test") {
+    ScrollView {
+        VStack(alignment: .leading, spacing: 30) {
+            SwiftMardownView(markdown: """
+            ```swift
+            // Swift example
+            struct ContentView: View {
+                @State private var count = 0
+                
+                var body: some View {
+                    VStack {
+                        Text("Count: \\(count)")
+                            .font(.largeTitle)
+                        
+                        Button("Increment") {
+                            count += 1
+                        }
+                        .buttonStyle(.borderedProminent)
+                    }
+                    .padding()
+                }
+            }
+            ```
+            """)
+            
+            SwiftMardownView(markdown: """
+            ```python
+            # Python example
+            def fibonacci(n):
+                '''Calculate fibonacci number recursively'''
+                if n <= 1:
+                    return n
+                return fibonacci(n-1) + fibonacci(n-2)
+            
+            # Test the function
+            for i in range(10):
+                print(f"F({i}) = {fibonacci(i)}")
+            ```
+            """)
+            
+            SwiftMardownView(markdown: """
+            ```javascript
+            // JavaScript example
+            class Calculator {
+                constructor() {
+                    this.result = 0;
+                }
+                
+                add(value) {
+                    this.result += value;
+                    return this;
+                }
+                
+                multiply(value) {
+                    this.result *= value;
+                    return this;
+                }
+                
+                getResult() {
+                    return this.result;
+                }
+            }
+            
+            const calc = new Calculator();
+            console.log(calc.add(5).multiply(3).getResult()); // 15
+            ```
+            """)
+        }
+        .padding()
+    }
+}

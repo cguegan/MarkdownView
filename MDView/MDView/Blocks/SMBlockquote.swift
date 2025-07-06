@@ -63,7 +63,7 @@ struct SMBlockquote: View {
                     SMBlockquote(nestedQuote)
                 } else if let codeBlock = block as? CodeBlock {
                     // Support code blocks within blockquotes
-                    SMCodeNative(codeBlock)
+                    SMCode(codeBlock)
                 } else {
                     // Fallback for any other block types
                     Text(block.format())

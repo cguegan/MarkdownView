@@ -170,12 +170,12 @@ struct SMTable: View {
                 .font(.headline)
             
             SwiftMardownView(markdown: """
-            | Feature | Status | Priority |
-            |---------|--------|----------|
-            | **Bold text** | ✅ Complete | High |
-            | *Italic text* | ✅ Complete | Medium |
-            | `Code blocks` | 🔄 In Progress | High |
-            | Links | ⏳ Pending | Low |
+            | Feature       | Status         | Priority |
+            |---------------|----------------|----------|
+            | **Bold text** | ✅ Complete    | High     |
+            | *Italic text* | ✅ Complete    | Medium   |
+            | `Code blocks` | 🔄 In Progress | High     |
+            | Links         | ⏳ Pending     | Low      |
             """)
             
             Text("Table with Long Content")
@@ -183,9 +183,9 @@ struct SMTable: View {
             
             SwiftMardownView(markdown: """
             | Long Column Header | Short | Another Header |
-            |-------------------|-------|----------------|
-            | This is a very long cell content that should wrap properly | OK | Another cell |
-            | Short | A bit longer content here | Short |
+            |--------------------|-------|----------------|
+            | This is a very long cell content that should wrap properly | OK | Another cell     |
+            | Short              | A bit longer content here | Short |
             | Medium length text | Text | Final cell content |
             """)
             
@@ -195,9 +195,9 @@ struct SMTable: View {
             SwiftMardownView(markdown: """
             | Col 1 | Col 2 | Col 3 | Col 4 |
             |-------|-------|-------|-------|
-            | A | B | C | D |
-            | E | F |   |   |
-            | G | H | I |   |
+            | A     | B     | C     | D     |
+            | E     | F     |       |       | 
+            | G     | H     | I     |       |
             """)
         }
         .padding()

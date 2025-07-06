@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is an iOS SwiftUI project called MDView that implements and compares different approaches to rendering Markdown in SwiftUI.
+This is an iOS/macOS SwiftUI project called MDView that implements a pure SwiftUI markdown renderer using Apple's swift-markdown parser.
 
 ## Build and Development Commands
 
@@ -34,21 +34,22 @@ MDView/
 ├── App/
 │   └── MDViewApp.swift            # Main app entry point
 ├── Views/
-│   ├── ContentView.swift          # Main comparison view
-│   ├── EditorView.swift          # Text editor component
-│   ├── AppleMarkdownView.swift   # Apple's implementation (if applicable)
-│   └── MarkdownStyledView.swift  # Alternative markdown styling implementation
+│   ├── ContentView.swift          # Main UI with editor/preview panels
+│   ├── EditorView.swift          # Markdown text editor
+│   ├── DebugStructView.swift     # Debug tree view of parsed markdown
+│   └── MarkdownView.swift        # Third-party comparison view
 ├── MDView/
-│   ├── SwiftMardownView.swift    # Custom markdown renderer
-│   └── Blocks/                   # Custom SwiftUI components for each markdown element
-│       ├── SMHeading.swift
-│       ├── SMParagraph.swift
-│       ├── SMCode.swift
-│       ├── SMBlockquote.swift
-│       ├── SMUnorderedList.swift
-│       ├── SMOrderedList.swift
-│       ├── SMTable.swift
-│       └── SMImage.swift
+│   ├── SwiftMardownView.swift    # Main renderer that parses and delegates
+│   └── Blocks/                   # Custom SwiftUI components for each element
+│       ├── SMHeading.swift       # H1-H6 headers
+│       ├── SMParagraph.swift     # Text with inline formatting
+│       ├── SMCode.swift          # Code blocks with monospace font
+│       ├── SMBlockquote.swift    # Quoted text with border
+│       ├── SMUnorderedList.swift # Bullet and task lists
+│       ├── SMOrderedList.swift   # Numbered lists
+│       ├── SMTable.swift         # Tables using SwiftUI Grid
+│       ├── SMImage.swift         # Images with error handling
+│       └── SMThematicBreak.swift # Horizontal rules (---)
 ├── Assets.xcassets/              # Asset catalog
 └── PreviewAssets/
     └── test.md                   # Sample markdown for testing
@@ -56,52 +57,53 @@ MDView/
 
 ### Core Components
 
-1. **Two Markdown Rendering Approaches**:
-   - **SwiftMardownView**: Custom implementation using Apple's swift-markdown parser
-   - **AppleMarkdownView**: Apple's implementation (if applicable)
+1. **SwiftMarkdown Implementation**:
+   - Uses Apple's swift-markdown parser for CommonMark compliance
+   - Each markdown element type is mapped to a custom SwiftUI view
+   - Pure SwiftUI implementation without UIKit/AppKit dependencies
 
-2. **SwiftMarkdown Custom Implementation Structure**:
-   ```
-   MDView/SwiftMardownView.swift
-   └── Parses markdown using swift-markdown Document
-   └── Maps each block type to custom SwiftUI components:
-       ├── SMHeading
-       ├── SMParagraph
-       ├── SMCode (with syntax highlighting via Highlightr)
-       ├── SMBlockquote
-       ├── SMUnorderedList
-       ├── SMOrderedList
-       ├── SMTable
-       └── SMImage (with async loading via Kingfisher)
-   ```
+2. **Key Features Implemented**:
+   - **Headings**: Six levels with appropriate sizing
+   - **Paragraphs**: With inline bold, italic, code, and links
+   - **Lists**: Ordered, unordered, and task lists with nesting
+   - **Code Blocks**: Monospaced font with language labels
+   - **Tables**: Using SwiftUI Grid with dividers and inline formatting
+   - **Images**: Async loading with error/loading states
+   - **Blockquotes**: Visual left border styling
+   - **Horizontal Rules**: Clean divider implementation
 
 3. **Main View Structure**:
-   - `ContentView`: Main container with flexible layout:
-     - **Left Panel**: Toggle between Editor or Debug view using segmented control
-     - **Right Panel**: Markdown preview that can be shown/hidden with animated transition
-     - Control bar includes:
-       - Segmented picker for left panel mode (Editor/Debug)
-       - Toggle switch for showing/hiding the preview panel
-   - **Animation**: Right panel slides in/out with opacity transition (0.3s ease-in-out)
-   - `EditorView`: Text editor component with two-way binding to markdown text
-   - `DebugStructView`: Shows parsed markdown AST structure
-   - `SwiftMardownView`: Renders the markdown content in the preview panel
+   - **ContentView**: Main container with flexible layout
+     - Left Panel: Toggle between Editor or Debug view
+     - Right Panel: Preview with show/hide animation
+     - Toolbar controls for panel management
+   - **EditorView**: Text editor with markdown syntax
+   - **DebugStructView**: Shows parsed AST structure
+   - **SwiftMardownView**: Renders the markdown content
 
 ### Key Dependencies
 
 - **swift-markdown**: Apple's CommonMark parser
 - **Kingfisher**: Image loading and caching
-- **Highlightr**: Code syntax highlighting
-- **LaTeXSwiftUI** & **MathJaxSwift**: Math rendering (imported but not yet implemented)
 
 ### Important Implementation Details
 
-- Custom block components handle their own styling and layout
-- Image handling extracts images from paragraphs for proper rendering
-- Code blocks support language-specific syntax highlighting
-- Tables are rendered with proper cell alignment and borders
-- Lists support nested structures
+- All components use native SwiftUI views (no NSViewRepresentable/UIViewRepresentable)
+- Inline markdown formatting uses AttributedString
+- List spacing issues solved by trimming whitespace
+- Table cells support inline markdown (bold, italic, code)
+- Images have size constraints (max 600x400)
+- Task lists use SF Symbols for checkboxes
+- Horizontal rules are implemented as SMThematicBreak
+
+### Recent Improvements
+
+- Simplified SMCode to pure SwiftUI (removed Highlightr dependency)
+- Refactored SMTable to use Grid API with row dividers
+- Enhanced SMImage with error handling and placeholders
+- Added SMThematicBreak for horizontal rules
+- Fixed nested list spacing with content trimming
 
 ### Test Data
 
-The project uses `test.md` as sample markdown content located in `PreviewAssets/` and loaded via Bundle resources in ContentView.
+The project uses `test.md` in PreviewAssets/ as comprehensive sample content covering all supported markdown features.

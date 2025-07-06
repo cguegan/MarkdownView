@@ -1,31 +1,33 @@
 # MDView
 
-A SwiftUI application that implements a custom markdown renderer using Apple's `swift-markdown` parser. It is pure vide coding using Claude Code in order to play and learn. Feel free to play, hack and use as you want.
+A SwiftUI application that implements a custom markdown renderer using Apple's `swift-markdown` parser. Built entirely with Claude Code as a learning exercise in pure SwiftUI development. Feel free to play, hack and use as you want.
 
 ## Features
 
 - **Custom Markdown Rendering**: Built from scratch using Apple's `swift-markdown` parser
-- **Pure SwiftUI**: All components implemented using native SwiftUI views
-- **Task Lists**: Support for GitHub-style task lists with checkboxes
-- **Rich Text Support**: Full inline markdown formatting (bold, italic, links, etc.)
-- **Cross-Platform**: Works on both macOS and iOS
-- **Live Preview**: Side-by-side editor and preview with animated transitions
-- **Debug View**: Inspect the parsed markdown structure
-- **Minimal Dependencies**: Only uses essential Swift packages
+- **Pure SwiftUI**: All components implemented using native SwiftUI views without UIKit/AppKit bridges
+- **Grid-based Tables**: Modern SwiftUI Grid API for proper table layout with dividers
+- **Task Lists**: Support for GitHub-style task lists with interactive checkboxes
+- **Rich Text Support**: Full inline markdown formatting (bold, italic, links, code, etc.)
+- **Image Handling**: Async loading with error states, placeholders, and size constraints
+- **Cross-Platform**: Works on iOS, macOS, and visionOS
+- **Live Preview**: Side-by-side editor and preview with smooth animated transitions
+- **Debug View**: Inspect the parsed markdown AST structure
+- **Minimal Dependencies**: Only uses essential Swift packages (no syntax highlighting libraries)
 
 ## Components
 
 ### Markdown Elements Supported
 
-- **Headings** (H1-H6) with proper sizing and styling
-- **Paragraphs** with inline formatting
-- **Code Blocks** with monospaced font and language labels
-- **Blockquotes** with visual left border
-- **Lists** (ordered, unordered, and task lists)
-- **Tables** with borders and alignment
-- **Images** with async loading via Kingfisher
-- **Links** rendered with native Text view
-- **Horizontal Rules** (thematic breaks) with multiple styles
+- **Headings** (H1-H6) with proper sizing and semantic styling
+- **Paragraphs** with full inline markdown formatting support
+- **Code Blocks** with monospaced font, language labels, and adaptive colors
+- **Blockquotes** with visual left border and nested content support
+- **Lists** (ordered, unordered, and interactive task lists with checkboxes)
+- **Tables** with Grid layout, black dividers, and inline markdown in cells
+- **Images** with async loading, error handling, placeholders, and size constraints
+- **Links** rendered as tappable native Text views
+- **Horizontal Rules** (thematic breaks) supporting ---, ***, and ___ styles
 
 ### Architecture
 
@@ -123,6 +125,32 @@ def fibonacci(n):
    - [ ] Unchecked task
 ```
 
+### Tables
+
+```markdown
+| Feature | Status | Priority |
+|---------|--------|----------|
+| **Bold text** | ✅ Complete | High |
+| *Italic text* | ✅ Complete | Medium |
+| `Code blocks` | 🔄 In Progress | High |
+| [Links](https://example.com) | ⏳ Pending | Low |
+
+| Name | Age | City |
+|------|-----|------|
+| John Doe | 30 | New York |
+| Jane Smith | 25 | London |
+```
+
+### Images
+
+```markdown
+![Beautiful landscape](https://images.unsplash.com/photo-123456)
+
+![Error handling demo](https://broken-url.com/image.jpg)
+
+![Placeholder example](https://via.placeholder.com/300x200)
+```
+
 ### Horizontal Rules
 
 ```markdown
@@ -179,45 +207,70 @@ xcodebuild -project MDView.xcodeproj clean
 ### View Modes
 
 The app provides multiple viewing modes accessible via toolbar:
-- **Editor/Debug Toggle**: Switch between markdown editor and parsed structure view
-- **Preview Toggle**: Show/hide the rendered markdown preview
-- **Animated Transitions**: Smooth animations when toggling panels
+- **Editor/Debug Toggle**: Switch between markdown editor and parsed AST structure view
+- **Preview Toggle**: Show/hide the rendered markdown preview with smooth animations
+- **Split View**: Resizable panels for comfortable editing and preview
+
+### Table Rendering
+
+Tables are rendered using SwiftUI's Grid API:
+- Automatic column sizing and alignment
+- Black dividers between rows for clear separation
+- Bold header row with thick bottom border
+- Support for inline markdown formatting in cells
+- Proper handling of tables with uneven row lengths
+- Clean, native SwiftUI implementation
+
+### Image Handling
+
+Enhanced image support with:
+- Asynchronous loading with Kingfisher
+- Error state with customizable placeholder
+- Loading progress indicators
+- Maximum size constraints (600x400)
+- Alt text display for accessibility
+- Graceful handling of broken URLs
 
 ### Code Block Styling
 
 Code blocks feature:
 - Monospaced font for readability
 - Language label display when specified
-- Horizontal scrolling for long lines
 - Adaptive background color for light/dark mode
+- Clean borders and padding
 - Text selection support
+- No external syntax highlighting dependencies
 
 ### List Handling
 
 Advanced list features:
 - Unlimited nesting depth
 - Mixed list types (ordered within unordered, etc.)
-- Task list checkboxes with SF Symbols
+- Interactive task list checkboxes with SF Symbols
 - Proper indentation and spacing
 - Support for complex content within list items
+- Trimmed whitespace for consistent rendering
 
 ### Text Formatting
 
-Native SwiftUI Text view handles:
+Native SwiftUI Text view with AttributedString handles:
 - **Bold** and *italic* text
-- `Inline code` spans
-- [Links](https://example.com)
+- `Inline code` spans with background
+- [Tappable links](https://example.com)
 - Combinations like ***bold italic***
+- Proper markdown parsing in all contexts
 
 ## Implementation Details
 
 ### Pure SwiftUI Approach
 
 All components are implemented using native SwiftUI views:
-- No UIViewRepresentable/NSViewRepresentable
-- No external syntax highlighting libraries
+- No UIViewRepresentable/NSViewRepresentable wrappers
+- No external syntax highlighting libraries (removed Highlightr)
+- Grid API for modern table layout
+- AttributedString for markdown text formatting
 - Minimal external dependencies
-- Clean, maintainable code
+- Clean, maintainable, idiomatic SwiftUI code
 
 ### Performance Optimizations
 
@@ -225,6 +278,15 @@ All components are implemented using native SwiftUI views:
 - Efficient text rendering with AttributedString
 - Minimal view rebuilds with proper state management
 - Trimmed whitespace to fix list spacing issues
+- Async image loading with caching via Kingfisher
+
+### Recent Improvements
+
+- **Grid-based Tables**: Migrated from HStack to Grid for proper table layout
+- **Enhanced Images**: Added error handling, placeholders, and size constraints
+- **Horizontal Rules**: Added support for thematic breaks (---, ***, ___)
+- **Table Formatting**: Fixed inline markdown support in table cells
+- **Pure SwiftUI**: Removed Highlightr dependency for simpler implementation
 
 ## Contributing
 

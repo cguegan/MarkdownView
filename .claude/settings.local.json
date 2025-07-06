@@ -7,7 +7,9 @@
       "Bash(rm:*)",
       "WebFetch(domain:swiftinit.org)",
       "WebFetch(domain:github.com)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git push:*)",
+      "Bash(git commit:*)"
     ],
     "deny": []
   }

@@ -42,9 +42,8 @@ struct SwiftMardownView: View {
             case let table as Markdown.Table:
                 SMTable(table)
             case let codeBlock as CodeBlock:
-                // Temporarily use simple version for testing
-                SMCodeSimple(codeBlock)
-                // SMCode(codeBlock)
+                SMCodeNative(codeBlock)
+                // SMCode(codeBlock) // Highlightr version - not working yet
             case let paragraph as Paragraph:
                 // Check if the paragraph contains Markdown.Image children
                 let images = paragraph.children.compactMap { $0 as? Markdown.Image }

@@ -13,6 +13,7 @@ enum LeftPanelMode: String, CaseIterable {
 }
 
 struct ContentView: View {
+    @State private var showTestHighlight = false
     
     /// State properties
     @State private var markdown: String = ""
@@ -26,6 +27,16 @@ struct ContentView: View {
     /// Main View
     var body: some View {
         NavigationStack {
+            if showTestHighlight {
+                TestHighlightView()
+                    .toolbar {
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button("Back") {
+                                showTestHighlight = false
+                            }
+                        }
+                    }
+            } else {
             // Main content area
             HStack(spacing: 0) {
                 // Left panel
@@ -58,6 +69,7 @@ struct ContentView: View {
             #endif
             .toolbar {
                 toolbarContent
+            }
             }
         }
         .onAppear() {
@@ -99,6 +111,17 @@ extension ContentView {
                 Label("Show Preview", systemImage: showPreview ? "sidebar.right" : "sidebar.right")
             }
             .toggleStyle(.button)
+        }
+        
+        ToolbarItem(placement: .primaryAction) {
+            Menu("Debug") {
+                Button("Test Highlightr") {
+                    showTestHighlight = true
+                }
+                Button("Theme Tester") {
+                    showTestHighlight = true
+                }
+            }
         }
     }
     

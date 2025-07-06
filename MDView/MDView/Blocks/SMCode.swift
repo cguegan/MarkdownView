@@ -72,50 +72,60 @@ struct SMCode: View {
     
     private func highlightCode() {
         guard let highlighter = Highlightr() else {
-            print("Failed to create Highlightr instance")
+            print("❌ Failed to create Highlightr instance")
             return
         }
+        print("✅ Created Highlightr")
         
-        // Configure code font
-        #if os(macOS)
-        highlighter.theme.codeFont = NSFont.monospacedSystemFont(ofSize: 12, weight: .regular)
-        #else
-        highlighter.theme.codeFont = UIFont.monospacedSystemFont(ofSize: 12, weight: .regular)
-        #endif
+        // Get available themes
+        let themes = highlighter.availableThemes()
+        print("📋 Available themes: \(themes.count) - First few: \(themes.prefix(5).joined(separator: ", "))")
         
-        // Try different themes based on color scheme
-        let themeName = colorScheme == .dark ? "monokai" : "github"
+        // Try to use a simple theme that's likely to exist
+        var themeSet = false
+        let tryThemes = ["default", "github", "xcode", themes.first].compactMap { $0 }
         
-        // Set the theme
-        if !highlighter.setTheme(to: themeName) {
-            print("Failed to set theme: \(themeName)")
-            // Try fallback themes
-            let fallbackThemes = ["xcode", "default", "atom-one-light"]
-            for fallback in fallbackThemes {
-                if highlighter.setTheme(to: fallback) {
-                    print("Using fallback theme: \(fallback)")
-                    break
-                }
+        for theme in tryThemes {
+            if highlighter.setTheme(to: theme) {
+                print("✅ Successfully set theme: \(theme)")
+                themeSet = true
+                break
+            } else {
+                print("❌ Failed to set theme: \(theme)")
             }
         }
         
-        // Debug: Print available themes
-        let themes = highlighter.availableThemes()
-        if !themes.isEmpty {
-            print("Available themes: \(themes.prefix(10).joined(separator: ", "))...")
+        if !themeSet {
+            print("⚠️ Could not set any theme, using default")
         }
-        print("Highlighting code with language: \(language ?? "plaintext")")
         
-        // Highlight the code - use the exact language or nil for auto-detection
-        if let highlighted = highlighter.highlight(code, as: language) {
+        // Try highlighting
+        let testLanguage = language?.lowercased() ?? "swift"
+        print("🔍 Attempting to highlight as: \(testLanguage)")
+        
+        if let highlighted = highlighter.highlight(code, as: testLanguage) {
+            print("✅ Highlighted successfully!")
+            print("📏 Length: \(highlighted.length)")
+            
+            // Check if there are actual color attributes
+            var colorCount = 0
+            highlighted.enumerateAttributes(in: NSRange(location: 0, length: highlighted.length), options: []) { attributes, range, _ in
+                if attributes[.foregroundColor] != nil {
+                    colorCount += 1
+                }
+            }
+            print("🎨 Color attributes found: \(colorCount)")
+            
             highlightedCode = highlighted
-            print("Successfully highlighted code with \(highlighted.length) characters")
         } else {
-            print("Failed to highlight code - trying without language specification")
-            // Try without language specification
+            print("❌ Failed to highlight with language: \(testLanguage)")
+            
+            // Try without language
             if let highlighted = highlighter.highlight(code) {
+                print("✅ Highlighted without language")
                 highlightedCode = highlighted
-                print("Successfully highlighted code without language")
+            } else {
+                print("❌ Failed to highlight without language")
             }
         }
     }

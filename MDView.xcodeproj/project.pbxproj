@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EF2597A32E1A4BD700FA4F18 /* 03_Mini_ISM_Manual.md in Resources */ = {isa = PBXBuildFile; fileRef = EF2597A22E1A4BD700FA4F18 /* 03_Mini_ISM_Manual.md */; };
+		D1FD32A9393F4216A63BA60A /* SMThematicBreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FD32A9393F4216A63BA60B /* SMThematicBreak.swift */; };
 		EF2597A62E1A4D7800FA4F18 /* Markdown in Frameworks */ = {isa = PBXBuildFile; productRef = EF2597A52E1A4D7800FA4F18 /* Markdown */; };
 		EF2597A82E1A4FF800FA4F18 /* MarkdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2597A72E1A4FF800FA4F18 /* MarkdownView.swift */; };
 		EFB0B1232E193A8000C2C218 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EFB0B11A2E193A8000C2C218 /* Assets.xcassets */; };
@@ -26,11 +26,10 @@
 		EFB0B13F2E19893200C2C218 /* SMOrderedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB0B13E2E19893200C2C218 /* SMOrderedList.swift */; };
 		EFB0B1412E198E1B00C2C218 /* SMImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB0B1402E198E1B00C2C218 /* SMImage.swift */; };
 		EFB0B1442E1998B400C2C218 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = EFB0B1432E1998B400C2C218 /* Kingfisher */; };
-		D1FD32A9393F4216A63BA60A /* SMThematicBreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FD32A9393F4216A63BA60B /* SMThematicBreak.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		EF2597A22E1A4BD700FA4F18 /* 03_Mini_ISM_Manual.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = 03_Mini_ISM_Manual.md; sourceTree = "<group>"; };
+		D1FD32A9393F4216A63BA60B /* SMThematicBreak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMThematicBreak.swift; sourceTree = "<group>"; };
 		EF2597A72E1A4FF800FA4F18 /* MarkdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownView.swift; sourceTree = "<group>"; };
 		EF66AA0C2E18F71400679843 /* MDView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MDView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFB0B11A2E193A8000C2C218 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -48,7 +47,6 @@
 		EFB0B1382E19786A00C2C218 /* SMCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMCode.swift; sourceTree = "<group>"; };
 		EFB0B13E2E19893200C2C218 /* SMOrderedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMOrderedList.swift; sourceTree = "<group>"; };
 		EFB0B1402E198E1B00C2C218 /* SMImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMImage.swift; sourceTree = "<group>"; };
-		D1FD32A9393F4216A63BA60B /* SMThematicBreak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMThematicBreak.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,7 +65,6 @@
 		EF25979D2E1A4A7B00FA4F18 /* PreviewAssets */ = {
 			isa = PBXGroup;
 			children = (
-				EF2597A22E1A4BD700FA4F18 /* 03_Mini_ISM_Manual.md */,
 				EFB0B1212E193A8000C2C218 /* test.md */,
 			);
 			path = PreviewAssets;
@@ -212,7 +209,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF2597A32E1A4BD700FA4F18 /* 03_Mini_ISM_Manual.md in Resources */,
 				EFB0B1232E193A8000C2C218 /* Assets.xcassets in Resources */,
 				EFB0B1242E193A8000C2C218 /* test.md in Resources */,
 			);

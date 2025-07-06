@@ -10,7 +10,6 @@
 		EF2597A32E1A4BD700FA4F18 /* 03_Mini_ISM_Manual.md in Resources */ = {isa = PBXBuildFile; fileRef = EF2597A22E1A4BD700FA4F18 /* 03_Mini_ISM_Manual.md */; };
 		EF2597A62E1A4D7800FA4F18 /* Markdown in Frameworks */ = {isa = PBXBuildFile; productRef = EF2597A52E1A4D7800FA4F18 /* Markdown */; };
 		EF2597A82E1A4FF800FA4F18 /* MarkdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2597A72E1A4FF800FA4F18 /* MarkdownView.swift */; };
-		EF2597AD2E1A7D3800FA4F18 /* Highlightr in Frameworks */ = {isa = PBXBuildFile; productRef = EF2597AC2E1A7D3800FA4F18 /* Highlightr */; };
 		EFB0B1232E193A8000C2C218 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EFB0B11A2E193A8000C2C218 /* Assets.xcassets */; };
 		EFB0B1242E193A8000C2C218 /* test.md in Resources */ = {isa = PBXBuildFile; fileRef = EFB0B1212E193A8000C2C218 /* test.md */; };
 		EFB0B1262E193A8000C2C218 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB0B11B2E193A8000C2C218 /* ContentView.swift */; };
@@ -56,7 +55,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				EFB0B1442E1998B400C2C218 /* Kingfisher in Frameworks */,
-				EF2597AD2E1A7D3800FA4F18 /* Highlightr in Frameworks */,
 				EF2597A62E1A4D7800FA4F18 /* Markdown in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -163,7 +161,6 @@
 			packageProductDependencies = (
 				EFB0B1432E1998B400C2C218 /* Kingfisher */,
 				EF2597A52E1A4D7800FA4F18 /* Markdown */,
-				EF2597AC2E1A7D3800FA4F18 /* Highlightr */,
 			);
 			productName = MDView;
 			productReference = EF66AA0C2E18F71400679843 /* MDView.app */;
@@ -196,7 +193,6 @@
 			packageReferences = (
 				EFB0B1422E1998B400C2C218 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				EF2597A42E1A4D7800FA4F18 /* XCRemoteSwiftPackageReference "swift-markdown" */,
-				EF2597AB2E1A7D3800FA4F18 /* XCRemoteSwiftPackageReference "Highlightr" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = EF66AA0D2E18F71400679843 /* Products */;
@@ -231,7 +227,6 @@
 				EFB0B1372E19591100C2C218 /* SMTable.swift in Sources */,
 				EFB0B1332E193C4D00C2C218 /* SMUnorderedList.swift in Sources */,
 				EFB0B12F2E193B3400C2C218 /* SMParagraph.swift in Sources */,
-				EF2597C12E1A8C9100FA4F18 /* SMCodeHighlightr.swift in Sources */,
 				EF2597A82E1A4FF800FA4F18 /* MarkdownView.swift in Sources */,
 				EFB0B1272E193A8000C2C218 /* EditorView.swift in Sources */,
 				EFB0B1312E193BD300C2C218 /* SMHeading.swift in Sources */,
@@ -481,14 +476,6 @@
 				minimumVersion = 0.6.0;
 			};
 		};
-		EF2597AB2E1A7D3800FA4F18 /* XCRemoteSwiftPackageReference "Highlightr" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/raspu/Highlightr.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.3.0;
-			};
-		};
 		EFB0B1422E1998B400C2C218 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
@@ -504,11 +491,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = EF2597A42E1A4D7800FA4F18 /* XCRemoteSwiftPackageReference "swift-markdown" */;
 			productName = Markdown;
-		};
-		EF2597AC2E1A7D3800FA4F18 /* Highlightr */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = EF2597AB2E1A7D3800FA4F18 /* XCRemoteSwiftPackageReference "Highlightr" */;
-			productName = Highlightr;
 		};
 		EFB0B1432E1998B400C2C218 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;

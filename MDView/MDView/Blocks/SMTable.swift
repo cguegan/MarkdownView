@@ -108,11 +108,8 @@ struct SMTable: View {
         .padding(.vertical, 8)
     }
     
-    /// Render cell content with markdown support
-    @ViewBuilder
-    func cellContent(_ cell: Markdown.Table.Cell) -> some View {
-        // Table cells can contain inline elements like paragraphs
-        // We need to iterate through children to get the formatted content
+    /// Get formatted content from a table cell
+    func getCellAttributedString(_ cell: Markdown.Table.Cell) -> AttributedString {
         var attributedString = AttributedString()
         
         for child in cell.children {
@@ -129,14 +126,18 @@ struct SMTable: View {
         
         // If no children, use plain text
         if attributedString.characters.isEmpty {
-            Text(cell.plainText)
-                .lineLimit(nil)
-                .fixedSize(horizontal: false, vertical: true)
-        } else {
-            Text(attributedString)
-                .lineLimit(nil)
-                .fixedSize(horizontal: false, vertical: true)
+            return AttributedString(cell.plainText)
         }
+        
+        return attributedString
+    }
+    
+    /// Render cell content with markdown support
+    @ViewBuilder
+    func cellContent(_ cell: Markdown.Table.Cell) -> some View {
+        Text(getCellAttributedString(cell))
+            .lineLimit(nil)
+            .fixedSize(horizontal: false, vertical: true)
     }
     
     /// Determine alignment based on cell content or column alignment

@@ -117,7 +117,7 @@ struct SMCodeSyntax: View {
             var searchRange = string.startIndex..<string.endIndex
             
             while let range = string.range(of: "\\b\(word)\\b", options: .regularExpression, range: searchRange) {
-                if let attrRange = text.range(of: word, options: [], range: nil) {
+                if let attrRange = text.range(of: word) {
                     text[attrRange].foregroundColor = color
                     if weight != .regular {
                         text[attrRange].font = .system(size: 12, weight: weight, design: .monospaced)
@@ -185,28 +185,32 @@ struct SMCodeSyntax: View {
 #Preview("Syntax Highlighting") {
     ScrollView {
         VStack(alignment: .leading, spacing: 30) {
-            SMCodeSyntax(CodeBlock(language: "swift", code: """
-                struct ContentView: View {
-                    @State private var count = 0
-                    
-                    var body: some View {
-                        VStack {
-                            Text("Count: \\(count)")
-                            Button("Increment") {
-                                count += 1
-                            }
+            SwiftMardownView(markdown: """
+            ```swift
+            struct ContentView: View {
+                @State private var count = 0
+                
+                var body: some View {
+                    VStack {
+                        Text("Count: \\(count)")
+                        Button("Increment") {
+                            count += 1
                         }
                     }
                 }
-                """))
+            }
+            ```
+            """)
             
-            SMCodeSyntax(CodeBlock(language: "python", code: """
-                def fibonacci(n):
-                    # Calculate fibonacci
-                    if n <= 1:
-                        return n
-                    return fibonacci(n-1) + fibonacci(n-2)
-                """))
+            SwiftMardownView(markdown: """
+            ```python
+            def fibonacci(n):
+                # Calculate fibonacci
+                if n <= 1:
+                    return n
+                return fibonacci(n-1) + fibonacci(n-2)
+            ```
+            """)
         }
         .padding()
     }

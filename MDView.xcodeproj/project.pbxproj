@@ -18,6 +18,7 @@
 		EF2597BA2E1A832400FA4F18 /* SimpleHighlightTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2597B72E1A832400FA4F18 /* SimpleHighlightTest.swift */; };
 		EF2597BB2E1A832400FA4F18 /* TestHighlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2597B82E1A832400FA4F18 /* TestHighlightView.swift */; };
 		EF2597BD2E1A89C800FA4F18 /* SMCodeHighlighted.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2597BC2E1A89C800FA4F18 /* SMCodeHighlighted.swift */; };
+		EF2597BF2E1A8AE600FA4F18 /* SMCodeSyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF2597BE2E1A8AE600FA4F18 /* SMCodeSyntax.swift */; };
 		EFB0B1232E193A8000C2C218 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EFB0B11A2E193A8000C2C218 /* Assets.xcassets */; };
 		EFB0B1242E193A8000C2C218 /* test.md in Resources */ = {isa = PBXBuildFile; fileRef = EFB0B1212E193A8000C2C218 /* test.md */; };
 		EFB0B1262E193A8000C2C218 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB0B11B2E193A8000C2C218 /* ContentView.swift */; };
@@ -46,6 +47,7 @@
 		EF2597B72E1A832400FA4F18 /* SimpleHighlightTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleHighlightTest.swift; sourceTree = "<group>"; };
 		EF2597B82E1A832400FA4F18 /* TestHighlightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHighlightView.swift; sourceTree = "<group>"; };
 		EF2597BC2E1A89C800FA4F18 /* SMCodeHighlighted.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMCodeHighlighted.swift; sourceTree = "<group>"; };
+		EF2597BE2E1A8AE600FA4F18 /* SMCodeSyntax.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMCodeSyntax.swift; sourceTree = "<group>"; };
 		EF66AA0C2E18F71400679843 /* MDView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MDView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFB0B11A2E193A8000C2C218 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EFB0B11B2E193A8000C2C218 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				EF2597BC2E1A89C800FA4F18 /* SMCodeHighlighted.swift */,
+				EF2597BE2E1A8AE600FA4F18 /* SMCodeSyntax.swift */,
 				EFB0B12E2E193B3400C2C218 /* SMParagraph.swift */,
 				EFB0B1382E19786A00C2C218 /* SMCode.swift */,
 				EF2597AF2E1A7FE900FA4F18 /* SMCodeSimple.swift */,
@@ -252,6 +255,7 @@
 				EF2597BD2E1A89C800FA4F18 /* SMCodeHighlighted.swift in Sources */,
 				EFB0B1372E19591100C2C218 /* SMTable.swift in Sources */,
 				EFB0B1332E193C4D00C2C218 /* SMUnorderedList.swift in Sources */,
+				EF2597BF2E1A8AE600FA4F18 /* SMCodeSyntax.swift in Sources */,
 				EFB0B12F2E193B3400C2C218 /* SMParagraph.swift in Sources */,
 				EF2597A82E1A4FF800FA4F18 /* MarkdownView.swift in Sources */,
 				EF2597B42E1A831300FA4F18 /* SMCodeNative.swift in Sources */,

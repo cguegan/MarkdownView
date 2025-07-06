@@ -83,11 +83,6 @@ struct SMTable: View {
                             .padding(.vertical, 6)
                             .padding(.horizontal, 4)
                             .frame(maxWidth: .infinity, alignment: leadingAlignment(for: cells[cellIndex]))
-                            .background(
-                                rowIndex % 2 == 1 ?
-                                (colorScheme == .dark ? Color.white.opacity(0.05) : Color.black.opacity(0.02)) :
-                                Color.clear
-                            )
                     }
                     
                     // Fill empty cells if row has fewer cells than header
@@ -98,13 +93,16 @@ struct SMTable: View {
                         }
                     }
                 }
+                
+                // Add divider between rows (but not after the last row)
+                if rowIndex < bodyRows.count - 1 {
+                    Divider()
+                        .gridCellColumns(headerCells.count)
+                        .opacity(0.3)
+                }
             }
         }
         .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 8)
-                .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
-        )
         .padding(.horizontal)
         .padding(.vertical, 8)
     }
@@ -200,3 +198,4 @@ struct SMTable: View {
     }
     .frame(maxWidth: .infinity)
 }
+

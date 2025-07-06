@@ -1,6 +1,6 @@
 //
-//  MarkdownViewTestApp.swift
-//  MarkdownViewTest
+//  MDViewApp.swift
+//  MDView
 //
 //  Created by Christophe Guégan on 05/07/2025.
 //
@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct MarkdownViewTestApp: App {
+struct MDViewApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()

@@ -93,3 +93,49 @@ struct SMUnorderedList: View {
      
     
 }
+
+#Preview("Unordered Lists") {
+    ScrollView {
+        VStack(alignment: .leading, spacing: 30) {
+            SwiftMardownView(markdown: """
+            - Simple list item one
+            - Simple list item two
+            - Simple list item three
+            """)
+            
+            SwiftMardownView(markdown: """
+            - List with **bold** text
+            - List with *italic* text
+            - List with `inline code`
+            """)
+            
+            SwiftMardownView(markdown: """
+            - Nested list example
+                - Sub item one
+                - Sub item two
+                    - Deep nested item
+                - Back to sub level
+            - Back to main level
+            """)
+            
+            SwiftMardownView(markdown: """
+            ## Task Lists
+            
+            - [ ] Unchecked task item
+            - [x] Checked task item
+            - [ ] Another unchecked item
+                - [x] Nested checked item
+                - [ ] Nested unchecked item
+            - Regular item without checkbox
+            """)
+            
+            SwiftMardownView(markdown: """
+            - Long list item that contains a lot of text and should wrap to multiple lines when displayed in the markdown renderer
+            - Short item
+            - Another long item with **bold text** and *italic text* that demonstrates how inline formatting works within list items
+            """)
+        }
+        .padding()
+    }
+    .frame(maxWidth: .infinity)
+}

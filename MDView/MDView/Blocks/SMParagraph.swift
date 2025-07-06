@@ -40,7 +40,21 @@ struct SMParagraph: View {
 }
 
 
-//#Preview {
-//    SMParagraph()
-//}
+#Preview("Paragraph Styles") {
+    ScrollView {
+        VStack(alignment: .leading, spacing: 20) {
+            SwiftMardownView(markdown: "This is a simple paragraph with plain text.")
+            
+            SwiftMardownView(markdown: "This paragraph contains **bold text**, *italic text*, and ***bold italic text***.")
+            
+            SwiftMardownView(markdown: "This paragraph has `inline code` and a [link to GitHub](https://github.com).")
+            
+            SwiftMardownView(markdown: "This is a longer paragraph that demonstrates how text wrapping works in the markdown renderer. It contains multiple sentences and should flow naturally across multiple lines when the width is constrained.")
+            
+            SwiftMardownView(markdown: "Paragraph with ~~strikethrough~~ and mixed **bold with *nested italic* text**.")
+        }
+        .padding()
+    }
+    .frame(maxWidth: .infinity)
+}
 

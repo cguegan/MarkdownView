@@ -57,7 +57,7 @@ struct SMOrderedList: View {
                     } else if let nestedOrderedList = block as? OrderedList {
                         SMOrderedList(nestedOrderedList, indentLevel: indentLevel + 1)
                     } else if let codeBlock = block as? CodeBlock {
-                        SMCode(codeBlock)
+                        SMCodeNative(codeBlock)
                     } else {
                         // Fallback for other block types
                         Text(block.format())
@@ -79,4 +79,50 @@ struct SMOrderedList: View {
     }
      
     
+}
+
+#Preview("Ordered Lists") {
+    ScrollView {
+        VStack(alignment: .leading, spacing: 30) {
+            SwiftMardownView(markdown: """
+            1. First item
+            2. Second item
+            3. Third item
+            """)
+            
+            SwiftMardownView(markdown: """
+            1. Item with **bold** text
+            2. Item with *italic* text
+            3. Item with `inline code`
+            """)
+            
+            SwiftMardownView(markdown: """
+            1. Main level item
+                1. Nested item one
+                2. Nested item two
+                    1. Deep nested item
+                    2. Another deep item
+                3. Back to nested level
+            2. Back to main level
+            3. Another main item
+            """)
+            
+            SwiftMardownView(markdown: """
+            1. Mixed list types
+                - Unordered sub-item
+                - Another unordered item
+            2. Back to ordered
+                1. Nested ordered
+                2. Another nested
+            """)
+            
+            SwiftMardownView(markdown: """
+            1. Long ordered list item that contains a lot of text and should wrap to multiple lines when displayed in the markdown renderer
+            2. Short item
+            3. Another long item with **bold text** and *italic text* that demonstrates how inline formatting works within ordered list items
+            """)
+        }
+        .padding()
+    }
+    .frame(maxWidth: .infinity)
 }

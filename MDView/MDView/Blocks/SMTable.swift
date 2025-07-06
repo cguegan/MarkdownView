@@ -69,6 +69,41 @@ struct SMTable: View {
 }
 
 
-//#Preview {
-//    SMParagraph()
-//}
+#Preview("Tables") {
+    ScrollView {
+        VStack(alignment: .leading, spacing: 30) {
+            SwiftMardownView(markdown: """
+            | Header 1 | Header 2 | Header 3 |
+            |----------|----------|----------|
+            | Cell 1   | Cell 2   | Cell 3   |
+            | Cell 4   | Cell 5   | Cell 6   |
+            """)
+            
+            SwiftMardownView(markdown: """
+            | Name | Age | City |
+            |------|-----|------|
+            | John Doe | 30 | New York |
+            | Jane Smith | 25 | London |
+            | Bob Johnson | 35 | Paris |
+            """)
+            
+            SwiftMardownView(markdown: """
+            | Feature | Status | Priority |
+            |---------|--------|----------|
+            | **Bold text** | ✅ Complete | High |
+            | *Italic text* | ✅ Complete | Medium |
+            | `Code blocks` | 🔄 In Progress | High |
+            | ~~Strikethrough~~ | ❌ Not Started | Low |
+            """)
+            
+            SwiftMardownView(markdown: """
+            | Long Column Header That Should Wrap | Short | Another Long Header |
+            |-------------------------------------|-------|---------------------|
+            | This is a very long cell content that demonstrates how tables handle longer text | OK | Another long cell with lots of content |
+            | Short | Short | Short |
+            """)
+        }
+        .padding()
+    }
+    .frame(width: 700, height: 600)
+}

@@ -43,7 +43,46 @@ struct SMImage: View {
     }
 }
 
-//#Preview {
-//    SMImage()
-//}
+#Preview("Images") {
+    ScrollView {
+        VStack(alignment: .leading, spacing: 30) {
+            Text("Remote Images")
+                .font(.headline)
+            
+            SwiftMardownView(markdown: """
+            ![Beautiful landscape](https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&auto=format&fit=crop&q=80)
+            """)
+            
+            SwiftMardownView(markdown: """
+            ![Small image](https://via.placeholder.com/200x150)
+            """)
+            
+            Text("Image with caption")
+                .font(.headline)
+                .padding(.top)
+            
+            SwiftMardownView(markdown: """
+            ![Mountain view](https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=600&auto=format&fit=crop&q=80)
+            
+            *Figure 1: A beautiful mountain landscape at sunset*
+            """)
+            
+            Text("Multiple images")
+                .font(.headline)
+                .padding(.top)
+            
+            SwiftMardownView(markdown: """
+            Here are some images in a paragraph:
+            
+            ![First](https://via.placeholder.com/300x200/FF0000/FFFFFF?text=First)
+            
+            ![Second](https://via.placeholder.com/300x200/00FF00/FFFFFF?text=Second)
+            
+            ![Third](https://via.placeholder.com/300x200/0000FF/FFFFFF?text=Third)
+            """)
+        }
+        .padding()
+    }
+    .frame(width: 700, height: 800)
+}
 

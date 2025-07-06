@@ -70,3 +70,21 @@ struct SMHeading: View {
     }
     
 }
+
+#Preview("Heading Levels") {
+    ScrollView {
+        VStack(alignment: .leading, spacing: 20) {
+            ForEach(1...6, id: \.self) { level in
+                SwiftMardownView(markdown: String(repeating: "#", count: level) + " Heading Level \(level)")
+            }
+            
+            Divider()
+            
+            // Test with inline formatting
+            SwiftMardownView(markdown: "## Heading with **bold** and *italic* text")
+            SwiftMardownView(markdown: "### Heading with `inline code`")
+        }
+        .padding()
+    }
+    .frame(maxWidth: .infinity)
+}

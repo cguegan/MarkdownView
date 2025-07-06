@@ -70,3 +70,33 @@ struct SMBlockquote: View {
     }
     
 }
+
+#Preview("Blockquotes") {
+    ScrollView {
+        VStack(alignment: .leading, spacing: 20) {
+            SwiftMardownView(markdown: "> This is a simple blockquote.")
+            
+            SwiftMardownView(markdown: "> This is a blockquote with **bold** and *italic* text.")
+            
+            SwiftMardownView(markdown: """
+            > This is a multi-line blockquote.
+            > It continues on the second line.
+            > And even has a third line.
+            """)
+            
+            SwiftMardownView(markdown: """
+            > ## Blockquote with heading
+            > This blockquote contains a heading and some regular text below it.
+            """)
+            
+            SwiftMardownView(markdown: """
+            > Nested blockquotes are also possible:
+            >> This is a nested blockquote
+            >> with multiple lines
+            > Back to the first level
+            """)
+        }
+        .padding()
+    }
+    .frame(maxWidth: .infinity)
+}

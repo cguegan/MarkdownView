@@ -245,14 +245,33 @@ struct SMCodeHighlighted: View {
                 pattern: pattern,
                 options: isMultiline ? [.anchorsMatchLines] : []
             )
-            let matches = regex.matches(in: string, options: [], range: NSRange(location: 0, length: string.count))
+            let matches = regex.matches(in: string, options: [], range: NSRange(location: 0, length: string.utf16.count))
             
             for match in matches {
-                if let startIndex = attributedString.indexFromStart(offsetBy: match.range.location),
-                   let endIndex = attributedString.indexFromStart(offsetBy: match.range.location + match.range.length) {
-                    attributedString[startIndex..<endIndex].foregroundColor = color
-                    if weight != .regular {
-                        attributedString[startIndex..<endIndex].font = .system(size: 12, weight: weight, design: .monospaced)
+                if let range = Range(match.range, in: string) {
+                    // Find the corresponding range in the AttributedString
+                    let substring = string[range]
+                    var searchStartIndex = attributedString.startIndex
+                    
+                    // Find all occurrences and match by position
+                    var occurrenceCount = 0
+                    let targetOccurrence = string[string.startIndex..<range.lowerBound].components(separatedBy: substring).count - 1
+                    
+                    while searchStartIndex < attributedString.endIndex {
+                        if let foundRange = attributedString[searchStartIndex...].range(of: substring) {
+                            if occurrenceCount == targetOccurrence {
+                                // Apply the styling
+                                attributedString[foundRange].foregroundColor = color
+                                if weight != .regular {
+                                    attributedString[foundRange].font = .system(size: 12, weight: weight, design: .monospaced)
+                                }
+                                break
+                            }
+                            occurrenceCount += 1
+                            searchStartIndex = foundRange.upperBound
+                        } else {
+                            break
+                        }
                     }
                 }
             }
@@ -262,20 +281,6 @@ struct SMCodeHighlighted: View {
     }
 }
 
-// Helper extension for AttributedString index calculation
-private extension AttributedString {
-    func indexFromStart(offsetBy offset: Int) -> AttributedString.Index? {
-        var currentIndex = startIndex
-        var currentOffset = 0
-        
-        while currentOffset < offset && currentIndex < endIndex {
-            currentIndex = index(after: currentIndex)
-            currentOffset += 1
-        }
-        
-        return currentOffset == offset ? currentIndex : nil
-    }
-}
 
 #Preview("Syntax Highlighting") {
     ScrollView {

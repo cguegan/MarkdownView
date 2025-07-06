@@ -120,7 +120,7 @@ struct SMUnorderedList: View {
                         SMOrderedList(nestedOrderedList, indentLevel: indentLevel + 1)
                     case let codeBlock as CodeBlock:
                         // Code blocks within list items
-                        SMCodeHighlighted(codeBlock)
+                        SMCodeSyntax(codeBlock)
                     default:
                         // Fallback for any other block types
                         Text(block.format())

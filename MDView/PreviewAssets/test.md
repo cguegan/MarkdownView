@@ -206,6 +206,28 @@ The latest version of the Code of safe working practices for merchant seafarers 
 | 1.1         | 17 June 2025  | Christophe Guegan | Cleanup Writing      |
 
 
-## Image
+## Images
 
-![Unsplash](https://images.unsplash.com/photo-1750688650545-d9e2a060dfe8?q=80&w=3206&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)
+### Working Images
+
+![Beautiful mountain landscape](https://images.unsplash.com/photo-1750688650545-d9e2a060dfe8?q=80&w=3206&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)
+
+![Small placeholder](https://via.placeholder.com/300x200/4169E1/FFFFFF?text=Placeholder)
+
+### Images with Alt Text
+
+![A red car parked on the street](https://via.placeholder.com/400x300/FF0000/FFFFFF?text=Red+Car)
+
+![](https://via.placeholder.com/400x300/00FF00/FFFFFF?text=No+Alt+Text)
+
+### Error Cases
+
+![Broken domain](https://this-domain-does-not-exist-12345.com/image.jpg)
+
+![404 Error](https://httpstat.us/404)
+
+![Empty URL]()
+
+### Very Large Image (will be constrained)
+
+![Large landscape photo that should be constrained to reasonable size](https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=4000&auto=format&fit=crop&q=80)

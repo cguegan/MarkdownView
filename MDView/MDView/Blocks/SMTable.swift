@@ -70,6 +70,7 @@ struct SMTable: View {
             
             // Header separator
             Divider()
+                .overlay(Color.black)
                 .gridCellColumns(headerCells.count)
                 .padding(.bottom, 4)
             
@@ -97,8 +98,8 @@ struct SMTable: View {
                 // Add divider between rows (but not after the last row)
                 if rowIndex < bodyRows.count - 1 {
                     Divider()
+                        .overlay(Color.black.opacity(0.3))
                         .gridCellColumns(headerCells.count)
-                        .opacity(0.3)
                 }
             }
         }

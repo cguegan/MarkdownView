@@ -8,24 +8,62 @@
 import SwiftUI
 import Markdown
 
+/// A SwiftUI view component that renders Markdown unordered lists with support for nested lists and task lists.
+///
+/// This component provides comprehensive list rendering with:
+/// - Standard bullet points for regular list items
+/// - GitHub-style task lists with interactive checkboxes
+/// - Multiple levels of nesting with proper indentation
+/// - Support for mixed content (lists can contain paragraphs, code blocks, nested lists)
+/// - Preservation of inline markdown formatting within list items
+///
+/// Features:
+/// - **Regular Lists**: Uses filled circles as bullet points
+/// - **Task Lists**: Displays checkboxes (checked/unchecked) using SF Symbols
+/// - **Nested Lists**: Supports unlimited nesting depth with progressive indentation
+/// - **Mixed Content**: List items can contain multiple block elements
+///
+/// Example markdown:
+/// ```markdown
+/// - Simple list item
+/// - Item with **bold** and *italic*
+///   - Nested item
+///   - Another nested item
+/// 
+/// - [ ] Unchecked task
+/// - [x] Completed task
+///   - [x] Nested completed task
+/// ```
 struct SMUnorderedList: View {
     
-    /// Properties
+    /// The UnorderedList content from the swift-markdown parser
+    /// 
     let content: UnorderedList
+    
+    /// The current indentation level (0 for root, increments for nested lists)
+    /// Used to calculate proper visual indentation
+    ///
     let indentLevel: Int
     
-    /// Computed Properties
+    /// Extracts all ListItem children from the UnorderedList
+    /// - Returns: Array of ListItem objects that make up this list
+    ///
     var items: [ListItem] {
         return content.children.compactMap { $0 as? ListItem }
     }
     
-    /// Initialiser
+    /// Initializes a new unordered list view
+    /// - Parameters:
+    ///   - list: The UnorderedList object containing the list content
+    ///   - indentLevel: The nesting level (defaults to 0 for root lists)
+    ///
     init(_ list: UnorderedList, indentLevel: Int = 0) {
         self.content = list
         self.indentLevel = indentLevel
     }
     
-    /// Main Body
+    /// The main view body that renders the list structure
+    ///
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             ForEach(items.indices, id: \.self) { idx in
@@ -33,46 +71,58 @@ struct SMUnorderedList: View {
                 renderListItem(item)
             }
         }
+        // Add small top padding for nested lists
         .padding(.top, indentLevel == 0 ? 0 : 3)
 
     }
     
+    /// Renders an individual list item with its bullet/checkbox and content
+    /// - Parameter listItem: The ListItem to render
+    /// - Returns: A view representing the formatted list item
+    ///
     func renderListItem(_ listItem: ListItem) -> some View {
         HStack(alignment: .top, spacing: 8) {
-            /// Display SF Symbols
+            
+            // Render the bullet point or checkbox
             if let checkbox = listItem.checkbox {
-                /// Task list item
+                // Task list item with checkbox
                 Image(systemName: checkbox == .checked ? "checkmark.square.fill" : "square")
                     .font(.system(size: 16))
                     .foregroundColor(checkbox == .checked ? .accentColor : .secondary)
-                    .padding(.leading, CGFloat(16 + (indentLevel * 24)))
-                    .padding(.top, 2) // Align with text baseline
+                    .padding(.leading, CGFloat(16 + (indentLevel * 24)))  // Progressive indentation
+                    .padding(.top, 2)  // Align checkbox with text baseline
             } else {
-                /// Bulleted list
+                // Regular bulleted list item
                 Image(systemName: "circle.fill")
                     .font(.system(size: 6))
-                    .padding(.leading, CGFloat(16 + (indentLevel * 24)))
-                    .padding(.top, 8) // Align bullet with text
+                    .padding(.leading, CGFloat(16 + (indentLevel * 24)))  // Progressive indentation
+                    .padding(.top, 8)  // Align bullet with text center
             }
             
+            // Render the list item content
             VStack(alignment: .leading, spacing: 0) {
-                // Render all blocks within the list item
+                // Iterate through all block elements within the list item
                 ForEach( Array(listItem.blockChildren.enumerated()),
                          id: \.offset) { idx, block in
                     
+                    // Handle different types of content that can appear in list items
                     switch block {
                     case let paragraph as Paragraph:
+                        // Regular text content with inline formatting
                         Text(getMarkdownText(from: paragraph))
                             .lineSpacing(4)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     case let nestedList as UnorderedList:
+                        // Nested unordered list (recursive)
                         SMUnorderedList(nestedList, indentLevel: indentLevel + 1)
                     case let nestedOrderedList as OrderedList:
+                        // Nested ordered list
                         SMOrderedList(nestedOrderedList, indentLevel: indentLevel + 1)
                     case let codeBlock as CodeBlock:
-                        SMCode(codeBlock)
+                        // Code blocks within list items
+                        SMCodeNative(codeBlock)
                     default:
-                        // Fallback for other block types
+                        // Fallback for any other block types
                         Text(block.format())
                     }
                 }
@@ -80,13 +130,24 @@ struct SMUnorderedList: View {
         }
     }
     
-    /// Helper function to get markdown text as AttributedString
+    /// Converts paragraph content to AttributedString, preserving inline formatting
+    /// 
+    /// Special handling includes:
+    /// - Trimming whitespace to fix spacing issues in nested lists
+    /// - Preserving all inline formatting (bold, italic, code, links)
+    /// - Graceful fallback to plain text if parsing fails
+    ///
+    /// - Parameter paragraph: The Paragraph object to convert
+    /// - Returns: An AttributedString with markdown formatting applied
+    ///
     private func getMarkdownText(from paragraph: Paragraph) -> AttributedString {
         do {
             let markdownString = paragraph.format()
+            // Trim whitespace to prevent excessive spacing in nested lists
             let trimmedMarkdownString = markdownString.trimmingCharacters(in: .whitespacesAndNewlines)
             return try AttributedString(markdown: trimmedMarkdownString)
         } catch {
+            // Fallback to plain text if markdown parsing fails
             return AttributedString(paragraph.plainText)
         }
     }

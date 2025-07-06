@@ -2,19 +2,57 @@
 //  SMCode.swift
 //  MDView
 //
-//  Code highlighting using Highlightr with proper setup
+//  Created by Christophe Guégan on 05/07/2025.
 //
 
 import SwiftUI
 import Markdown
 import Highlightr
 
+/// A SwiftUI view component that renders Markdown code blocks with syntax highlighting.
+///
+/// This component provides professional code display with:
+/// - Syntax highlighting using the Highlightr library
+/// - Automatic language detection when no language is specified
+/// - Theme adaptation based on system color scheme (light/dark mode)
+/// - Horizontal scrolling for long lines of code
+/// - Optional language label display
+/// - Text selection support for copying code
+///
+/// Features:
+/// - **Language Support**: Highlights code based on the specified language in markdown
+/// - **Theme Adaptation**: Automatically switches between light and dark themes
+/// - **Fallback Rendering**: Shows plain monospaced text if highlighting fails
+/// - **Cross-Platform**: Works on both iOS and macOS with platform-specific text views
+///
+/// Example markdown:
+/// ```markdown
+/// ```swift
+/// let greeting = "Hello, World!"
+/// print(greeting)
+/// ```
+/// 
+/// ```python
+/// def greet(name):
+///     return f"Hello, {name}!"
+/// ```
+/// ```
 struct SMCode: View {
+    /// The raw code content to be displayed
     let code: String
+    
+    /// The programming language for syntax highlighting (e.g., "swift", "python")
+    /// If nil, Highlightr will attempt to auto-detect the language
     let language: String?
+    
+    /// Stores the syntax-highlighted version of the code
     @State private var highlightedCode: NSAttributedString?
+    
+    /// Tracks the current color scheme to apply appropriate theme
     @Environment(\.colorScheme) var colorScheme
     
+    /// Initializes a new code block view from markdown content
+    /// - Parameter content: The CodeBlock object from swift-markdown parser
     init(_ content: CodeBlock) {
         self.code = content.code.trimmingCharacters(in: .whitespacesAndNewlines)
         self.language = content.language?.lowercased()
@@ -70,6 +108,14 @@ struct SMCode: View {
         }
     }
     
+    /// Configures syntax highlighting based on language and color scheme
+    /// 
+    /// This method:
+    /// 1. Creates a Highlightr instance
+    /// 2. Selects an appropriate theme based on the color scheme
+    /// 3. Attempts to highlight the code with the specified language
+    /// 4. Falls back to auto-detection if language-specific highlighting fails
+    /// 5. Updates the UI on the main thread when complete
     private func setupHighlighting() {
         DispatchQueue.global(qos: .userInitiated).async {
             guard let highlighter = Highlightr() else {
@@ -77,18 +123,18 @@ struct SMCode: View {
                 return
             }
             
-            // Debug: List available themes
+            // Get all available syntax highlighting themes
             let themes = highlighter.availableThemes()
             print("Available themes: \(themes.prefix(10).joined(separator: ", "))")
             
-            // Try to set an appropriate theme
+            // Select theme based on color scheme with fallback options
             let themeName: String
             if colorScheme == .dark {
-                // Try dark themes in order of preference
+                // Dark themes ordered by preference for better readability
                 let darkThemes = ["vs2015", "monokai", "atom-one-dark", "tomorrow-night", "solarized-dark"]
                 themeName = darkThemes.first(where: { themes.contains($0) }) ?? themes.first ?? "default"
             } else {
-                // Try light themes in order of preference
+                // Light themes ordered by preference for better readability
                 let lightThemes = ["github", "xcode", "vs", "atom-one-light", "solarized-light"]
                 themeName = lightThemes.first(where: { themes.contains($0) }) ?? themes.first ?? "default"
             }
@@ -96,14 +142,16 @@ struct SMCode: View {
             let themeSet = highlighter.setTheme(to: themeName)
             print("Theme '\(themeName)' set: \(themeSet)")
             
-            // Try to highlight with the specified language
+            // Attempt syntax highlighting with multiple fallback strategies
             let highlighted: NSAttributedString?
             if let lang = language {
+                // Try language-specific highlighting with fast render first (better performance)
                 highlighted = highlighter.highlight(code, as: lang, fastRender: true)
-                    ?? highlighter.highlight(code, as: lang) // Try without fast render
-                    ?? highlighter.highlight(code) // Try auto-detection
+                    ?? highlighter.highlight(code, as: lang) // Fallback: Try without fast render
+                    ?? highlighter.highlight(code) // Final fallback: Auto-detect language
             } else {
-                highlighted = highlighter.highlight(code) // Auto-detect
+                // No language specified: Let Highlightr auto-detect
+                highlighted = highlighter.highlight(code)
             }
             
             if let highlighted = highlighted {
@@ -118,7 +166,10 @@ struct SMCode: View {
     }
 }
 
-// Custom view to display NSAttributedString
+/// A wrapper view for displaying highlighted code with horizontal scrolling
+/// 
+/// This view provides a scrollable container for the attributed string,
+/// ensuring long lines of code can be viewed by scrolling horizontally.
 struct CodeTextView: View {
     let attributedString: NSAttributedString
     
@@ -131,13 +182,16 @@ struct CodeTextView: View {
     }
 }
 
-// Bridge to display NSAttributedString in SwiftUI
+/// Bridge component to display NSAttributedString in SwiftUI
+/// 
+/// This view attempts to convert NSAttributedString to SwiftUI's AttributedString
+/// for better integration, falling back to platform-specific views when needed.
 struct AttributedText: View {
     let attributedString: NSAttributedString
     
     var body: some View {
         if #available(iOS 15.0, macOS 12.0, *) {
-            // Try to convert to SwiftUI AttributedString
+            // Attempt conversion to native SwiftUI AttributedString for better performance
             if let swiftUIAttrString = try? AttributedString(attributedString, including: \.uiKit) {
                 Text(swiftUIAttrString)
                     .font(.system(size: 12, weight: .regular, design: .monospaced))
@@ -153,6 +207,10 @@ struct AttributedText: View {
 }
 
 #if os(macOS)
+/// Platform-specific text view for macOS using NSTextView
+/// 
+/// Provides a native macOS text view for displaying syntax-highlighted code
+/// with proper text selection and monospace font rendering.
 struct PlatformAttributedText: NSViewRepresentable {
     let attributedString: NSAttributedString
     
@@ -172,13 +230,17 @@ struct PlatformAttributedText: NSViewRepresentable {
     func updateNSView(_ nsView: NSTextView, context: Context) {
         nsView.textStorage?.setAttributedString(attributedString)
         
-        // Set a default font if needed
+        // Ensure monospace font for code readability
         if nsView.font == nil {
             nsView.font = NSFont.monospacedSystemFont(ofSize: 12, weight: .regular)
         }
     }
 }
 #else
+/// Platform-specific text view for iOS using UITextView
+/// 
+/// Provides a native iOS text view for displaying syntax-highlighted code
+/// with proper text selection and monospace font rendering.
 struct PlatformAttributedText: UIViewRepresentable {
     let attributedString: NSAttributedString
     

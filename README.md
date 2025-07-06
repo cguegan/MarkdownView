@@ -25,7 +25,7 @@ A SwiftUI application that implements a custom markdown renderer using Apple's `
 - **Tables** with borders and alignment
 - **Images** with async loading via Kingfisher
 - **Links** rendered with native Text view
-- **Horizontal Rules**
+- **Horizontal Rules** (thematic breaks) with multiple styles
 
 ### Architecture
 
@@ -45,10 +45,11 @@ MDView/
         ├── SMParagraph.swift    # Paragraph with inline markdown
         ├── SMCode.swift         # Code blocks with clean styling
         ├── SMBlockquote.swift   # Blockquote with border styling
-        ├── SMUnorderedList.swift # Bullet and task lists
-        ├── SMOrderedList.swift  # Numbered lists
-        ├── SMTable.swift        # Table rendering
-        └── SMImage.swift        # Async image loading
+        ├── SMUnorderedList.swift  # Bullet and task lists
+        ├── SMOrderedList.swift   # Numbered lists
+        ├── SMTable.swift         # Table rendering
+        ├── SMImage.swift         # Async image loading
+        └── SMThematicBreak.swift # Horizontal rules
 ```
 
 ## Dependencies
@@ -120,6 +121,24 @@ def fibonacci(n):
 2. Second item
    - [x] Nested task
    - [ ] Unchecked task
+```
+
+### Horizontal Rules
+
+```markdown
+Regular paragraph above.
+
+---
+
+New section with three hyphens.
+
+***
+
+Another section with three asterisks.
+
+___
+
+Final section with three underscores.
 ```
 
 ## Building

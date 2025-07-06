@@ -5,6 +5,8 @@
 
 It leverages swift-markdown to parse markdown content, fully compliant with the CommonMark Spec.
 
+---
+
 ## Lists
 
 By creating a culture where everyone takes responsibility for a safe working environment an takes care of themselves and one another, many work-related accidents and incidents can be avoided.
@@ -26,6 +28,8 @@ By creating a culture where everyone takes responsibility for a safe working env
     - [ ] Nested unchecked item
 - Regular item without checkbox
 
+---
+
 ## Ordered Lists
 
 1. Item One
@@ -33,12 +37,15 @@ By creating a culture where everyone takes responsibility for a safe working env
     1. Test nested orderer list
     2. Second sub item
 
+***
+
 ## Long styled paragraphs in list
 
 - **Long item rendered in list**: Seafarers, like shore workers, have the right and expectation that they will remain safe at work. 
 - The Company and employers have a responsibility to ensure the health, safety and welfare at work of all seafarers and other workers on board. 
 - Seafarers have a duty to take reasonable care for the occupational health and safety of themselves and others, and to cooperate with their employer and the Company in matters of health, safety and welfare.
 
+___
 
 ## Table
 
@@ -46,6 +53,8 @@ By creating a culture where everyone takes responsibility for a safe working env
 | ------------ | ----------- |
 | Col_1 Row_A  | Col_2 Row_A |
 | Col_1 Row_B  | Col_2 Row_B |
+
+- - -
 
 ## Code
 
@@ -153,9 +162,33 @@ public class HelloWorld {
 ### Inline Code
 You can also use inline code like `let x = 42` or `print("Hello")` within paragraphs.
 
+* * *
+
 ## Blockquote
 
 > By creating a culture where everyone takes responsibility for a safe working environment an takes care of themselves and one another, many work-related accidents and incidents can be avoided.
+
+_ _ _
+
+## Horizontal Rules Examples
+
+### Different styles of horizontal rules:
+
+Three hyphens:
+---
+
+Three asterisks:
+***
+
+Three underscores:
+___
+
+With spaces between:
+- - -
+
+* * *
+
+_ _ _
 
 ## Rule
 

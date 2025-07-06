@@ -43,6 +43,8 @@ struct SwiftMardownView: View {
                 SMTable(table)
             case let codeBlock as CodeBlock:
                 SMCode(codeBlock)
+            case let thematicBreak as ThematicBreak:
+                SMThematicBreak(thematicBreak)
             case let paragraph as Paragraph:
                 // Check if the paragraph contains Markdown.Image children
                 let images = paragraph.children.compactMap { $0 as? Markdown.Image }

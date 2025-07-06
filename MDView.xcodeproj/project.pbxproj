@@ -26,6 +26,7 @@
 		EFB0B13F2E19893200C2C218 /* SMOrderedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB0B13E2E19893200C2C218 /* SMOrderedList.swift */; };
 		EFB0B1412E198E1B00C2C218 /* SMImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB0B1402E198E1B00C2C218 /* SMImage.swift */; };
 		EFB0B1442E1998B400C2C218 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = EFB0B1432E1998B400C2C218 /* Kingfisher */; };
+		D1FD32A9393F4216A63BA60A /* SMThematicBreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FD32A9393F4216A63BA60B /* SMThematicBreak.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,6 +48,7 @@
 		EFB0B1382E19786A00C2C218 /* SMCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMCode.swift; sourceTree = "<group>"; };
 		EFB0B13E2E19893200C2C218 /* SMOrderedList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMOrderedList.swift; sourceTree = "<group>"; };
 		EFB0B1402E198E1B00C2C218 /* SMImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMImage.swift; sourceTree = "<group>"; };
+		D1FD32A9393F4216A63BA60B /* SMThematicBreak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMThematicBreak.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +140,7 @@
 				EFB0B13E2E19893200C2C218 /* SMOrderedList.swift */,
 				EFB0B1342E194D0000C2C218 /* SMBlockquote.swift */,
 				EFB0B1402E198E1B00C2C218 /* SMImage.swift */,
+				D1FD32A9393F4216A63BA60B /* SMThematicBreak.swift */,
 			);
 			path = Blocks;
 			sourceTree = "<group>";
@@ -234,6 +237,7 @@
 				EFB0B1412E198E1B00C2C218 /* SMImage.swift in Sources */,
 				EFB0B1352E194D0000C2C218 /* SMBlockquote.swift in Sources */,
 				EFB0B12A2E193A8000C2C218 /* MDViewApp.swift in Sources */,
+				D1FD32A9393F4216A63BA60A /* SMThematicBreak.swift in Sources */,
 				EFB0B1392E19786A00C2C218 /* SMCode.swift in Sources */,
 				EFB0B12B2E193A8000C2C218 /* SwiftMardownView.swift in Sources */,
 			);

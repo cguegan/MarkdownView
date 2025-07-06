@@ -61,7 +61,12 @@ struct SMImage: View {
     
     /// Alt text for accessibility
     var altText: String? {
-        content.title ?? content.plainText.isEmpty ? nil : content.plainText
+        if let title = content.title {
+            return title
+        } else if !content.plainText.isEmpty {
+            return content.plainText
+        }
+        return nil
     }
     
     /// Initializes a new image view

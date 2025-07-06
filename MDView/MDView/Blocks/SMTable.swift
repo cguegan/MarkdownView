@@ -69,10 +69,10 @@ struct SMTable: View {
             }
             
             // Header separator
-            Divider()
-                .overlay(Color.black)
+            Rectangle()
+                .foregroundStyle(.black)
                 .gridCellColumns(headerCells.count)
-                .padding(.bottom, 4)
+                .frame(height: 2)
             
             // Body rows
             ForEach(Array(bodyRows.enumerated()), id: \.offset) { rowIndex, row in
@@ -98,7 +98,7 @@ struct SMTable: View {
                 // Add divider between rows (but not after the last row)
                 if rowIndex < bodyRows.count - 1 {
                     Divider()
-                        .overlay(Color.black.opacity(0.3))
+                        .overlay(Color.black.opacity(0.7))
                         .gridCellColumns(headerCells.count)
                 }
             }
@@ -111,15 +111,17 @@ struct SMTable: View {
     /// Render cell content with markdown support
     @ViewBuilder
     func cellContent(_ cell: Markdown.Table.Cell) -> some View {
-        // Try to parse cell content as markdown for inline formatting
-        let cellText = cell.plainText
+        // Get formatted content that preserves inline markdown
+        let formattedContent = cell.format()
         
-        if let attributedString = try? AttributedString(markdown: cellText) {
+        // Try to create attributed string with markdown
+        if let attributedString = try? AttributedString(markdown: formattedContent) {
             Text(attributedString)
                 .lineLimit(nil)
                 .fixedSize(horizontal: false, vertical: true)
         } else {
-            Text(cellText)
+            // Fallback to plain text
+            Text(cell.plainText)
                 .lineLimit(nil)
                 .fixedSize(horizontal: false, vertical: true)
         }

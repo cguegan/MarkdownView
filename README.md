@@ -1,6 +1,6 @@
 # MDView
 
-A SwiftUI application that implements a custom markdown renderer using Apple's `swift-markdown` parser.
+A SwiftUI application that implements a custom markdown renderer using Apple's `swift-markdown` parser. It is pure vide coding using Claude Code in order to play and learn. Feel free to play, hack and use as you want.
 
 ## Features
 
@@ -66,16 +66,16 @@ import SwiftUI
 struct ContentView: View {
     let markdown = """
     # Hello World
-    
+
     This is a **bold** text with `inline code`.
-    
+
     ```swift
     func greet() {
         print("Hello!")
     }
     ```
     """
-    
+
     var body: some View {
         SwiftMardownView(markdown: markdown)
     }

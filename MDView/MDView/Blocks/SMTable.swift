@@ -111,17 +111,29 @@ struct SMTable: View {
     /// Render cell content with markdown support
     @ViewBuilder
     func cellContent(_ cell: Markdown.Table.Cell) -> some View {
-        // Get formatted content that preserves inline markdown
-        let formattedContent = cell.format()
+        // Table cells can contain inline elements like paragraphs
+        // We need to iterate through children to get the formatted content
+        var attributedString = AttributedString()
         
-        // Try to create attributed string with markdown
-        if let attributedString = try? AttributedString(markdown: formattedContent) {
-            Text(attributedString)
+        for child in cell.children {
+            if let paragraph = child as? Paragraph {
+                // Format the paragraph content to preserve inline markdown
+                if let paragraphAttr = try? AttributedString(markdown: paragraph.format()) {
+                    attributedString.append(paragraphAttr)
+                }
+            } else {
+                // For other inline content, use plain text
+                attributedString.append(AttributedString(child.plainText))
+            }
+        }
+        
+        // If no children, use plain text
+        if attributedString.characters.isEmpty {
+            Text(cell.plainText)
                 .lineLimit(nil)
                 .fixedSize(horizontal: false, vertical: true)
         } else {
-            // Fallback to plain text
-            Text(cell.plainText)
+            Text(attributedString)
                 .lineLimit(nil)
                 .fixedSize(horizontal: false, vertical: true)
         }
